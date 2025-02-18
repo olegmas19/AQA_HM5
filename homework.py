@@ -1,6 +1,4 @@
 from datetime import time
-from pprint import pprint
-
 
 def test_dark_theme_by_time():
     """
