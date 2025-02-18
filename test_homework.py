@@ -8,13 +8,12 @@ def test_dark_theme_by_time():
     # TODO переключите темную тему в зависимости от времени суток (с 22 до 6 часов утра - ночь)
 
     is_dark_theme = None
-    if current_time >= time(hour=22) or current_time <= time(hour=6):
-        is_dark_theme = True
-        print('Темная тема включена')
-    else:
-        is_dark_theme = False
-        print('Темная тема выключена')
+
+    if is_dark_theme is None:
+        is_dark_theme = current_time.hour >= 22 or current_time.hour < 6
     assert is_dark_theme is True
+    state_string = "включена" if is_dark_theme else "выключена"
+    print('Темная тема ' + state_string)
 
 
 def test_dark_theme_by_time_and_user_choice():
@@ -33,19 +32,13 @@ def test_dark_theme_by_time_and_user_choice():
     is_dark_theme = None
 
     if dark_theme_enabled_by_user is None:
-        if current_time >= time(hour=22) or current_time <= time(hour=6):
-            is_dark_theme = True
-            print('Темная тема включена')
-        else:
-            is_dark_theme = False
-            print('Темная тема выключена')
-    elif dark_theme_enabled_by_user:
-        is_dark_theme = True
-        print('Темная тема включена')
+        is_dark_theme = current_time.hour >= 22 or current_time.hour < 6
     else:
-        is_dark_theme = False
-        print('Темная тема выключена')
+        is_dark_theme = dark_theme_enabled_by_user
     assert is_dark_theme is True
+    state_string = "включена" if is_dark_theme else "выключена"
+    print('Темная тема ' + state_string)
+
 
 
 def test_find_suitable_user():
@@ -97,7 +90,7 @@ def test_readable_function():
 
 def print_name(func, *args):
     func_name = func.__name__.replace("_", " ").title()
-    args_name = ", ".join([*args])
+    args_name = ", ".join(*args)
     print(f"{func_name} [{args_name}]")
     return f"{func_name} [{args_name}]"
 
