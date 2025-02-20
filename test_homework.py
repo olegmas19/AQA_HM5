@@ -90,7 +90,7 @@ def test_readable_function():
 
 def print_name(func, *args):
     func_name = func.__name__.replace("_", " ").title()
-    args_name = ", ".join(*args)
+    args_name = ", ".join([*args])
     print(f"{func_name} [{args_name}]")
     return f"{func_name} [{args_name}]"
 
